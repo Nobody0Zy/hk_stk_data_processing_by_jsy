@@ -107,7 +107,9 @@ class StandardizeDataFormat:
         fill_res_std_df.loc[in_trade_session_idx,:] = merge_res_df_by_pre_post_price.loc[in_trade_session_idx,:]
         fill_res_std_df.sort_index(inplace=True)
         # 填充nan
-        fill_res_std_df = self._fillna_for_std_stk_df(fill_res_std_df)
+        fill_res_std_df = fill_res_std_df.groupby(
+            level='stk',group_keys=False).apply(
+                self._fillna_for_std_stk_df)
         return fill_res_std_df
     
     
