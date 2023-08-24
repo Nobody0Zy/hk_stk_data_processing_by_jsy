@@ -7,7 +7,7 @@ trade_session_change_date_dict = {
 
 # 历史开发路径
 # 分钟线历史开发路径==========================================================
-min_bar_develop_hist_floder_path = {
+min_bar_develop_hist_folder_path = {
     # 原始数据路径--以股票代码保存的分钟线
     'v01': 'D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_develop_data\\stock\\HK_stock_data\\jsy_develop_hist_data\\min_bar\\v01_raw_data_stk_csv',
     # 原始数据转换为pkl格式后的路径

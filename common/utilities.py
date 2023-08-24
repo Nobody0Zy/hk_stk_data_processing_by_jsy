@@ -1,5 +1,5 @@
 from typing import Tuple
-
+import re
 import config
 import numpy as np
 import pandas as pd
@@ -32,19 +32,19 @@ def get_trade_session_time_tuple(file_name) -> Tuple[str,str]:
         if trade_session_change_date_dict_keys_list[n] <= file_date_str <= trade_session_change_date_dict_keys_list[n+1]:
             return trade_session_change_date_dict[trade_session_change_date_dict_keys_list[n]]
 
-def gen_trade_session_date_time_dict(file_name,trade_session_time_tuple,output_int=False):
+def gen_trade_session_date_time_dict(file_name,trade_session_time_tuple,return_int=False):
     
     date_str = file_name.split('.')[0]
     trade_session_date_time_dict = {
         'am_open_time': date_str + ' ' + trade_session_time_tuple[0][0],
         'am_close_time': date_str + ' ' + trade_session_time_tuple[0][1],
-        'pm_open_time': date_str + ' ' +trade_session_time_tuple[1][0],
+        'pm_open_time': date_str + ' ' + trade_session_time_tuple[1][0],
         'pm_close_time': date_str + ' ' + trade_session_time_tuple[1][1],
     }
-    if output_int:
+    if return_int:
         for key in trade_session_date_time_dict.keys():
-            trade_session_date_time_dict[key] = \
-                trade_session_date_time_dict[key].replace(r'[- :]', '',regex=True).str[:-2].astype(np.int64)
+            date_time_int = int(re.sub(r'[- :]','',trade_session_date_time_dict[key]))
+            trade_session_date_time_dict[key] = date_time_int
         return trade_session_date_time_dict
     else:
         return trade_session_date_time_dict
