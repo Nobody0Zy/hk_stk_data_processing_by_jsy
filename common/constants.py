@@ -19,3 +19,9 @@ min_bar_develop_hist_folder_path = {
 
 # 日线历史开发路径==========================================================
 date_bar_develop_hist_file_path = None 
+
+# 用于评估的其他来源的日线数据路径(东方财富、新浪）
+date_bar_other_source_for_evaluate_compose_date_bar_folder_path = {
+    'eastmoney_nfq_by_ak': "D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_stable_data\\stock\\HK_stock_data\\akshare_data\\akshare_hk_date_bar\\hk_date_bar_raw_by_em.pkl",
+    'sina_nfq_by_ak': "D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_stable_data\\stock\\HK_stock_data\\akshare_data\\akshare_hk_date_bar\\hk_date_bar_raw_by_sina.pkl"
+}
