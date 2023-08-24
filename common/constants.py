@@ -18,4 +18,7 @@ min_bar_develop_hist_folder_path = {
 
 
 # 日线历史开发路径==========================================================
-date_bar_develop_hist_file_path = None 
+date_bar_develop_hist_file_path = {
+    # 标准化分钟线数据合成日线数据后的路径
+    'v10': 'D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_develop_data\\stock\\HK_stock_data\\jsy_develop_hist_data\\date_bar\\v10_date_bar.pkl',
+}
