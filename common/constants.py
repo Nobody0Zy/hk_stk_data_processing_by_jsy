@@ -22,3 +22,11 @@ date_bar_develop_hist_file_path = {
     # 标准化分钟线数据合成日线数据后的路径
     'v10': 'D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_develop_data\\stock\\HK_stock_data\\jsy_develop_hist_data\\date_bar\\v10_date_bar.pkl',
 }
+
+
+# 临时存储路径（将文件放置于固态，提升读写速度）==================================
+# 临时分钟线数据存储路径=======================================================
+min_bar_temp_folder_path = {
+    # 将pkl文件时间轴标准化后（包括合并盘前盘后竞价数据）的路径
+    'v10': "F:\\local_tmp_data\\stock\\HK\\v10\\v10_format_min_bar_raw_cols"
+}
