@@ -6,6 +6,7 @@ CONFIG = {
     'trade_session_change_date': trade_session_change_date_dict,
     'min_bar_develop_hist_folder_path': min_bar_develop_hist_folder_path,
     'date_bar_develop_hist_file_path': date_bar_develop_hist_file_path,
+    'date_bar_other_source_file_path': date_bar_other_source_for_evaluate_compose_date_bar_folder_path,
     'min_bar_temp_folder_path': min_bar_temp_folder_path,
 }
 

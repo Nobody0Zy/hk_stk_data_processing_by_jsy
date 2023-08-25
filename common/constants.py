@@ -23,6 +23,13 @@ date_bar_develop_hist_file_path = {
     'v10': 'D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_develop_data\\stock\\HK_stock_data\\jsy_develop_hist_data\\date_bar\\v10_date_bar.pkl',
 }
 
+# 用于评估的其他来源的日线数据路径(东方财富、新浪）
+date_bar_other_source_for_evaluate_compose_date_bar_folder_path = {
+    'eastmoney_nfq_by_ak': "D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_stable_data\\stock\\HK_stock_data\\akshare_data\\akshare_hk_date_bar\\hk_date_bar_raw_by_em.pkl",
+    'sina_nfq_by_ak': "D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_stable_data\\stock\\HK_stock_data\\akshare_data\\akshare_hk_date_bar\\hk_date_bar_raw_by_sina.pkl"
+}
+
+
 
 # 临时存储路径（将文件放置于固态，提升读写速度）==================================
 # 临时分钟线数据存储路径=======================================================

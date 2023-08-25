@@ -1,12 +1,15 @@
-from typing import Tuple
 import re
+from typing import Tuple
+
 import config
+import EvaluateDateBar as EvalDateBar
 import numpy as np
 import pandas as pd
 
 global trade_session_change_date_dict
 trade_session_change_date_dict = config.get_config('trade_session_change_date')
 
+EvalDateBar = EvalDateBar
 
 def gen_stk_date_empty_df(stk_list,trade_date_time_list,columns_list):
     if not stk_list.any() or not trade_date_time_list.any() or not columns_list.any():
