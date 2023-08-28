@@ -50,7 +50,7 @@ class EvaluateDateBar:
         return stk_df_format_list
     
     
-    def _plot_date_bar(self,stk_df_list,stk,df1_ylabel,df2_ylabel,save_fig=False,save_png_file_path=None):
+    def _plot_date_bar(self,stk_df_list,title,df1_ylabel,df2_ylabel,save_fig=False,save_png_file_path=None):
         stk_df_format_list = self.__trans_date_bar_format(stk_df_list)
         # 添加幅图,即被比较的数据的k线图
         add_plot = [
@@ -64,7 +64,7 @@ class EvaluateDateBar:
 
         if not save_fig:
             # 绘制
-            mpf.plot(stk_df_format_list[0], type='candle', title={'title': stk, 'y': 0.98},
+            mpf.plot(stk_df_format_list[0], type='candle', title={'title': title, 'y': 0.98},
                         ylabel=df1_ylabel,style=my_style, volume=False, tight_layout=True,
                         addplot=add_plot, main_panel=0,panel_ratios = (1,1),
                         figratio=(1.618, 1), figscale=1.3, datetime_format='%Y-%m-%d',
@@ -72,18 +72,21 @@ class EvaluateDateBar:
         else:
             if save_png_file_path is None:
                 raise ValueError('save_png_file_path is None!')
-            mpf.plot(stk_df_format_list[0],type='candle',title={'title': stk, 'y': 0.98},
+            mpf.plot(stk_df_format_list[0],type='candle',title={'title': title, 'y': 0.98},
                         ylabel=df1_ylabel,style=my_style, volume=False, tight_layout=True,
-                        addplot=add_plot, main_panel=0,panel_ratios = (1,1),
+                        addplot=add_plot, main_panel=0,panel_ratios=(1,1),
                         figratio=(1.618, 1), figscale=1.3, datetime_format='%Y-%m-%d',
                         savefig=save_png_file_path
                         )
 
 
     # 绘制stk的k线图 
-    def plot_date_bar(self,stk,start_date,end_date,evaluate_df_ylabel,other_source_df_ylabel,save_png_file_path=None):
+    def plot_date_bar(self,stk,start_date,end_date,title,evaluated_df_ylabel,other_source_df_ylabel,save_fig=False,save_png_file_path=None):
         evaluate_date_bar_stk_df = self.evaluate_date_bar.loc[idx[stk,start_date:end_date],:]
         other_source_date_bar_stk_df = self.other_source_date_bar.loc[idx[stk,start_date:end_date],:]
         stk_df_list = [evaluate_date_bar_stk_df,other_source_date_bar_stk_df]
-        self._plot_date_bar(stk_df_list,stk,evaluate_df_ylabel,other_source_df_ylabel,save_png_file_path)
+        if not save_fig:
+            self._plot_date_bar(stk_df_list,title,evaluated_df_ylabel,other_source_df_ylabel)
+        else:
+            self._plot_date_bar(stk_df_list,title,evaluated_df_ylabel,other_source_df_ylabel,save_fig,save_png_file_path)
         
