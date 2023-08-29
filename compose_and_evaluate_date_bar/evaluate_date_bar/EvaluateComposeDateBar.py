@@ -29,7 +29,7 @@ class EvaluateComposeDateBar:
     def plot_date_bar(self,stk,start_date,end_date,save_fig=False,save_png_folder_path=None):
         evaluated_df_ylabel = self.evaluated_date_bar_version + '_price'
         other_source_df_ylabel = self.other_source_date_bar_version + '_rice'
-        file_name = stk + '_' + str(start_date) + '_' + str(end_date)+'vs_'+self.other_source_date_bar_version + '.png'
+        file_name = stk + '_' + str(start_date) + '_' + str(end_date)+'_vs_'+self.other_source_date_bar_version + '.png'
         save_png_file_path = os.path.join(save_png_folder_path,self.evaluated_date_bar_version,file_name)
         plot_info = {
             'stk': stk,

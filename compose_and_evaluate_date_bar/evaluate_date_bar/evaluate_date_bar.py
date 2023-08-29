@@ -14,63 +14,66 @@ sys.path.append("D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_process
 import config
 import utilities as utl
 
-hk_date_bar_em_file_path = config.get_config('date_bar_other_source_file_path')['eastmoney_nfq_by_ak']
-hk_date_bar_sina_file_path = config.get_config('date_bar_other_source_file_path')['sina_nfq_by_ak']
-
 sys.path.append("D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy\\compose_and_evaluate_date_bar\\evaluate_date_bar")
 import EvaluateComposeDateBar
 
 EvalDateBar = EvaluateComposeDateBar.EvaluateComposeDateBar
 
-
-# ========================================================================== 
-def save_err_percent_to_csv(err_percent_df_list,save_file_path):
-    err_percent_total_df =  pd.concat(err_percent_df_list,axis=1)
-    err_percent_total_df.columns = ['err_percent_compose_em','err_percent_compose_sina']
-    err_percent_total_df.to_csv(save_file_path)
-    
-# ==========================================================================
-def main():
-    # 获取需要评估的数据
-    hk_date_bar_em = pd.read_pickle(hk_date_bar_em_file_path)
-    hk_date_bar_sina = pd.read_pickle(hk_date_bar_sina_file_path)
-    # 由分钟线合成的日线数据
-    hk_date_bar_version = 'v10'
-    hk_date_bar_file_path = config.get_config('date_bar_develop_hist_file_path')[hk_date_bar_version]
-    hk_date_bar_by_compose = pd.read_pickle(hk_date_bar_file_path)
-    
-    # ==============================================================================
-    threshold = 0.05
-    # 评估compose和em的差异
-    eval_compose_em = EvalDateBar(hk_date_bar_by_compose,hk_date_bar_em,hk_date_bar_version,'em')
-    eval_compose_em_err_percent =  eval_compose_em.get_relative_err_percent(threshold)
-    # 评估compose和sina的差异
-    eval_compose_sina = EvalDateBar(hk_date_bar_by_compose,hk_date_bar_sina,hk_date_bar_version,'sina')
-    eval_compose_sina_err_percent = eval_compose_sina.get_relative_err_percent(threshold)
-    # 合并评估结果，并保存输出
-    err_percent_df_list = [eval_compose_em_err_percent,eval_compose_sina_err_percent]
-    save_folder_path = config.get_config('evaluate_res_folder_path')['res_df']
-    res_file_name = hk_date_bar_version + '_err_percent.csv'
-    save_file_path = os.path.join(save_folder_path,res_file_name)
-    save_err_percent_to_csv(err_percent_df_list,save_file_path)
-    
-    # ==============================================================================
-    # 绘制图并保存
-    # 绘制的股票和日期范围
-    save_folder_path = config.get_config('evaluate_res_folder_path')['res_plot']
-    plot_info = {
-            'stk': 'hk00001',
+class MainEvaluator:
+    def __init__(self):
+        self.hk_date_bar_version = 'v10'
+        # 获取em和sina的日线数据
+        self.hk_date_bar_em_file_path = config.get_config('date_bar_other_source_file_path')['eastmoney_nfq_by_ak']
+        self.hk_date_bar_sina_file_path = config.get_config('date_bar_other_source_file_path')['sina_nfq_by_ak']
+        self.hk_date_bar_em = pd.read_pickle(self.hk_date_bar_em_file_path)
+        self.hk_date_bar_sina = pd.read_pickle(self.hk_date_bar_sina_file_path)
+        # 获取由分钟线合成的日线数据
+        self.hk_date_bar_file_path = config.get_config('date_bar_develop_hist_file_path')[self.hk_date_bar_version]
+        self.hk_date_bar_by_compose = pd.read_pickle(self.hk_date_bar_file_path)
+        # 评估错误的阈值
+        self.threshold = 0.05
+        
+        # 保存评估结果的文件夹路径
+        self.save_evaluate_res_folder_path = config.get_config('evaluate_res_folder_path')
+        
+        self.plot_info = {
+            'stk': 'hk00700',
             'start_date': 20190101,
             'end_date': 20201231,
             'save_fig': True,
-            'save_png_folder_path': save_folder_path,
-     }
+            'save_png_folder_path': self.save_evaluate_res_folder_path['res_plot'],
+        }
     
-    # 绘制compose和em的日线图，比较差异，并保存
-    eval_compose_em.plot_date_bar(**plot_info)
-    # 绘制compose和sina的日线图，比较差异,并保存
-    eval_compose_sina.plot_date_bar(**plot_info)
+    def plot_evaluations(self, eval_compose_em, eval_compose_sina):
+        eval_compose_em.plot_date_bar(**self.plot_info)
+        eval_compose_sina.plot_date_bar(**self.plot_info)
+
+
+    def save_err_percent_to_csv(self, err_percent_df_list: List[pd.DataFrame],cols: List[str], save_file_path: str):
+        err_percent_total_df = pd.concat(err_percent_df_list, axis=1)
+        err_percent_total_df.columns = cols
+        err_percent_total_df.to_csv(save_file_path)
+        
+    def evaluate(self):
+        # 评估compose和em的差异
+        eval_compose_em = EvalDateBar(self.hk_date_bar_by_compose, self.hk_date_bar_em, self.hk_date_bar_version, 'em')
+        eval_compose_em_err_percent = eval_compose_em.get_relative_err_percent(self.threshold)
+        # 评估compose和sina的差异
+        eval_compose_sina = EvalDateBar(self.hk_date_bar_by_compose, self.hk_date_bar_sina, self.hk_date_bar_version, 'sina')
+        eval_compose_sina_err_percent = eval_compose_sina.get_relative_err_percent(self.threshold)
+        # 合并评估结果，并保存输出
+        err_percent_df_list = [eval_compose_em_err_percent, eval_compose_sina_err_percent]
+        res_file_name = self.hk_date_bar_version + '_err_percent.csv'
+        save_res_cols = [f'{self.hk_date_bar_version}_vs_em', f'{self.hk_date_bar_version}_vs_sina']
+        save_file_path = os.path.join(self.save_evaluate_res_folder_path['res_df'], res_file_name)
+        self.save_err_percent_to_csv(err_percent_df_list, save_res_cols,save_file_path)
+        
+        self.plot_evaluations(eval_compose_em, eval_compose_sina)
+        
+def main():
+    evaluator = MainEvaluator()
+    evaluator.evaluate()
 
 if __name__ == '__main__':
+    print('The game is on!')
     main()
-    
