@@ -82,7 +82,8 @@ C --> A[数据结果评估]
 - [x] 合成日线
     **python仓库代码位置：**
     > compose_and_evaluate_date_bar/compose_date_bar/compose_date_bar_by_format_min_bar.py
-
+**合成中的错误日志路径**
+> compose_and_evaluate_date_bar/compose_date_bar/error_min_bar_stk_df.log
 ##### 3.1.1 相对误差评估（方法可换）&绘制k线图直观评估
 - [x] 与东方财富和新浪的日线数据进行对比
     **python代码位置：**
