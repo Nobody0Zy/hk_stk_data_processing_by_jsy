@@ -53,7 +53,7 @@ xxxxxx为date，如20200101
 - 原始字段存储路径
 > F:\local_tmp_data\stock\HK\v10_format_min_bar_raw_cols
 
-- 添加字段后的数据存储路径
+- 添加字段存储路径
 > F:\local_tmp_data\stock\HK\v10_format_min_bar_add_cols
 
 **标准化数据格式**
@@ -78,22 +78,21 @@ C --> A[数据结果评估]
 - 对筛选出来的异常数据根据情况进行修正
 - 修正后的数据再次进行数据结果评估
 #### 3.1 数据结果评估标准（可以跟换，例如波动及分布）
+##### 3.1.0 合成日线
+- [ ] 合成日线
+    **python仓库代码位置：**
+    > compose_and_evaluate_date_bar/compose_date_bar/compose_date_bar_by_format_min_bar.py
 
-##### 3.1.1 合成日线评估
-- [ ] 合成日线
-    > **python代码位置：**
-    > 
+##### 3.1.1 相对误差评估（方法可换）&绘制k线图直观评估
 - [ ] 与东方财富和新浪的日线数据进行对比
-    > **python代码位置：**
-    >
-##### 3.1.2 合成日线绘制k线图直观评估
-- [ ] 合成日线
-    > **python代码位置：**
-    >
-- [ ] 绘制k线图
-    > **python代码位置：**
-    >
-与k线数据进行对比，观察不和谐，不匹配的地方。
+    **python代码位置：**
+    > compose_and_evaluate_date_bar/evaluate_date_bar/evaluate_date_bar.py
+
+    ***与k线数据进行对比，观察不和谐，不匹配的地方。***
+
+**评估结果仓库路径**
+> compose_and_evaluate_date_bar/evaluate_date_bar/evaluate_res/
+
 
 ##### 3.1.3 分钟线抽样评估（待定，没有可比较对象）
 - [ ] 待定？？？？
