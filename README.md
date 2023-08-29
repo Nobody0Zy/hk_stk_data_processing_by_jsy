@@ -79,12 +79,12 @@ C --> A[数据结果评估]
 - 修正后的数据再次进行数据结果评估
 #### 3.1 数据结果评估标准（可以跟换，例如波动及分布）
 ##### 3.1.0 合成日线
-- [ ] 合成日线
+- [x] 合成日线
     **python仓库代码位置：**
     > compose_and_evaluate_date_bar/compose_date_bar/compose_date_bar_by_format_min_bar.py
 
 ##### 3.1.1 相对误差评估（方法可换）&绘制k线图直观评估
-- [ ] 与东方财富和新浪的日线数据进行对比
+- [x] 与东方财富和新浪的日线数据进行对比
     **python代码位置：**
     > compose_and_evaluate_date_bar/evaluate_date_bar/evaluate_date_bar.py
 
