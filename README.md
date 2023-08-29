@@ -99,13 +99,38 @@ C --> A[数据结果评估]
 - [ ] 待定？？？？
 
 #### 3.2异常数据检测及修正
-##### 3.2.1 负数异常值
+##### 3.2.1 负数错误值
+
+|stk/date_time|open|high|low|close|volume|amount|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|hk00001/20190921|<0|<0|<0|<0|<0|<0|
+
 - [x] 检测
     筛选出负数异常值
     result: 
 - [x] 修正
-#####
-##### 3.2.2 成交量100修正
+##### 3.2.2 量价错误值
+- 3.2.2.1 volume =0,amount!=0
+
+    |stk/date_time|open|high|low|close|volume|amount|
+    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+    |hk00001/20190921|np.float64|np.float64|np.float64|np.float64|**np.float64=0**|**np.float64!=0**|
+
+- 3.2.2.2 volume !=0,amount=0
+    |stk/date_time|open|high|low|close|volume|amount|
+    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+    |hk00001/20190921|np.float64|np.float64|np.float64|np.float64|**np.float64!=0**|**np.float64=0**|
+
+- 3.2.2.3 volume=0,amount=0, not_equal(open,high,low,close) 
+    |stk/date_time|open|high|low|close|volume|amount|
+    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+    |hk00001/20210104|err|err|err|err|**np.float64=0**|**np.float64=0**|
+    
+
+
+
+
+##### 3.2.3 成交量100修正
 
 
 
