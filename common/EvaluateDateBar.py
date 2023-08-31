@@ -13,10 +13,14 @@ running_time = MD.running_time
 idx = pd.IndexSlice
 
 class EvaluateDateBar:
-    def __init__(self,evaluate_date_bar:pd.DataFrame,other_source_date_bar:pd.DataFrame) -> None:
+    def __init__(self,evaluate_date_bar:pd.DataFrame,other_source_date_bar:pd.DataFrame,evaluated_date_bar_version,
+                 other_source_dat_bar_version)-> None:
         self.evaluate_date_bar = evaluate_date_bar
         self.other_source_date_bar = other_source_date_bar       
+        self.evaluated_date_bar_version = evaluated_date_bar_version
+        self.other_source_date_bar_version = other_source_dat_bar_version
         
+     
     def _calc_relative_err(self):
         df1 = self.evaluate_date_bar
         df2 = self.other_source_date_bar
@@ -81,10 +85,17 @@ class EvaluateDateBar:
 
 
     # 绘制stk的k线图 
-    def plot_date_bar(self,stk,start_date,end_date,title,evaluated_df_ylabel,other_source_df_ylabel,save_fig=False,save_png_file_path=None):
+    def plot_date_bar(self,stk,start_date,end_date,save_fig=False,save_png_folder_path=None):
         evaluate_date_bar_stk_df = self.evaluate_date_bar.loc[idx[stk,start_date:end_date],:]
         other_source_date_bar_stk_df = self.other_source_date_bar.loc[idx[stk,start_date:end_date],:]
         stk_df_list = [evaluate_date_bar_stk_df,other_source_date_bar_stk_df]
+        
+        title = stk + '_' + str(start_date) + '_' + str(end_date)+'_vs_'+self.other_source_date_bar_version
+        file_name = title + '.png'
+        evaluated_df_ylabel = self.evaluated_date_bar_version + '_price'
+        other_source_df_ylabel = self.other_source_date_bar_version + '_price'
+        save_png_file_path = os.path.join(save_png_folder_path,self.evaluated_date_bar_version,file_name)
+        
         if not save_fig:
             self._plot_date_bar(stk_df_list,title,evaluated_df_ylabel,other_source_df_ylabel)
         else:
