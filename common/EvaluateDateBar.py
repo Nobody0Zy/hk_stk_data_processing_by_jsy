@@ -94,7 +94,7 @@ class EvaluateDateBar:
         file_name = title + '.png'
         evaluated_df_ylabel = self.evaluated_date_bar_version + '_price'
         other_source_df_ylabel = self.other_source_date_bar_version + '_price'
-        save_png_file_path = os.path.join(save_png_folder_path,self.evaluated_date_bar_version,file_name)
+        save_png_file_path = os.path.join(save_png_folder_path,file_name)
         
         if not save_fig:
             self._plot_date_bar(stk_df_list,title,evaluated_df_ylabel,other_source_df_ylabel)

@@ -1,6 +1,6 @@
 任务:港股数据处理
 
-### 0.数据存储文件格式更改
+### 0.数据存储文件格式更改(v0.1,v0.2)
 ```mermaid
 graph LR
 A[stk.csv] --> B[minxxxxxx.pkl]
@@ -85,7 +85,7 @@ G --> H[保存到临时路径和历史路径]
 
 ### 2 数据处理
 
-#### 2.1 时间轴数据格式标准化&日内用前价格进行填充（version v1.0）
+#### 2.1 时间轴数据格式标准化&日内用前价格进行填充（version 1.0）
 
 **标准化数据格式**
 | stk/date_time | open | high | low | close | volume | amount |pre_close | avg_price | hfq_factor |
@@ -125,17 +125,77 @@ G --> H[保存到临时路径和历史路径]
 ---
 
 
+### 3.数据结果评估 AND 异常数据检测及修正
+```mermaid
+graph LR
+A[数据结果评估] --> B[异常数据检测]
+B --> C[异常数据修正]
+C --> A[数据结果评估]
+``` 
+- 筛选出异常数据
+- 根据不同columns的数据统计异常数据的占比
+- 观察异常数据，提出数据可能存在异常的假设，进行异常数据筛选
+- 对筛选出来的异常数据根据情况进行修正
+- 修正后的数据再次进行数据结果评估
+#### 3.1 数据结果评估标准（可以跟换，例如波动及分布）
+##### 3.1.0.1 合成日线
+- [x] 合成日线
+    **python仓库代码位置：**
+    > common/ComposeDateBar.py
 
-### 3.数据处理结果汇总
-#### 3.1 缺失值
-缺失的数据用前交易日价格数据填充，volume和amount用0填充
-##### 3.1.0 缺失的交易日
-    20170407，20170410，20191129
-##### 3.1.1 交易日缺失大量数据
-    原始数据录入错误，大量数据缺失,
-    20200515，20200518，20200519，20200520，20200521，20200715
-##### 3.1.2 当日交易时段内缺失值
-    - 异常缺失数据，数据做了其他聚合操作，筛出错误值
-    - 正常数据，price用前一交易日的价格填充，volume和amount用0填充
-### 
-  
+##### 3.1.0.1 相对误差评估（方法可换）&绘制k线图直观评估
+    每个数据相对误差超过0.05的数据，认为是异常数据
+- [x] 与东方财富和新浪的日线数据进行对比
+    **python代码位置：**
+    > common/EvaluateDateBar.py
+
+
+#### 3.1.1 评估v10(标准化数据合成的数据)
+- [x] 合成日线
+    **python仓库代码位置：**
+    > compose_and_evaluate_date_bar\v10\compose_date_bar.py
+
+- [ ] 相对误差评估（方法可换）&绘制k线图直观评估
+    **python仓库代码位置：**
+    > compose_and_evaluate_date_bar\v10\evaluate_date_bar.py
+
+    **评估结果位置：**
+    > compose_and_evaluate_date_bar\v10\res
+    
+    ***与k线数据进行对比，观察不和谐，不匹配的地方。***
+
+
+##### 3.1.3 分钟线抽样评估（待定，没有可比较对象）
+- [ ] 待定？？？？
+
+#### 3.2 异常数据检测及修正
+##### 3.2.1 负数错误值
+
+| stk/date_time | open | high | low | close | volume | amount |   
+| :----: | :----: | :----: | :----: | :----: | :----: | :----: |  
+| hk00001/20190921 | <0 | <0 | <0 | <0 | <0 | <0 |   
+
+
+- [x] 检测
+    筛选出负数异常值
+    result: 
+- [x] 修正
+##### 3.2.2 量价错误值
+- 3.2.2.1 volume=0,amount!=0
+
+    |stk/date_time|open|high|low|close|volume|amount|
+    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+    |hk00001/20190921|np.float64|np.float64|np.float64|np.float64|**np.float64=0**|**np.float64!=0**|
+
+- 3.2.2.2 volume!=0,amount=0
+    |stk/date_time|open|high|low|close|volume|amount|
+    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+    |hk00001/20190921|np.float64|np.float64|np.float64|np.float64|**np.float64!=0**|**np.float64=0**|
+
+- 3.2.2.3 volume=0,amount=0, not_equal(open,high,low,close) 
+    |stk/date_time|open|high|low|close|volume|amount|
+    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+    |hk00001/20210104|err|err|err|err|**np.float64=0**|**np.float64=0**|
+
+
+

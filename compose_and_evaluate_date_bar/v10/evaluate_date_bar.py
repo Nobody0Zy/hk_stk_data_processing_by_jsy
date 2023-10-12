@@ -35,7 +35,7 @@ class MainEvaluator:
             f"D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy\\compose_and_evaluate_date_bar\\{self.hk_date_bar_version}"
         
         self.plot_info = {
-            'stk': 'hk03690',
+            'stk': 'hk00001',
             'start_date': 20110101,
             'end_date': 20231231,
             'save_fig': True,
