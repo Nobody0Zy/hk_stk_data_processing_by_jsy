@@ -32,7 +32,7 @@ class MainEvaluator:
         
         # 保存评估结果的文件夹路径
         self.save_evaluate_res_folder_path = \
-            f"D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy\\compose_and_evaluate_date_bar\\{self.hk_date_bar_version}\\"
+            f"D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy\\compose_and_evaluate_date_bar\\{self.hk_date_bar_version}"
         
         self.plot_info = {
             'stk': 'hk03690',
