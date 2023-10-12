@@ -133,7 +133,7 @@ def multiprocess_process_hk_min_bar(jsy_raw_data_date_pkl_file_list ,process_num
 def main():
     print('The game is on!')
     v02_floder_path = config.get_config('min_bar_develop_hist_folder_path')['v02']
-    save_folder_path_v10 = config.get_config('min_bar_develop_hist_folder_path')['v10']
+    # save_folder_path_v10 = config.get_config('min_bar_develop_hist_folder_path')['v10']
     need_standardize_files_list = []
     for root, dirs, files in os.walk(v02_floder_path):
         if not dirs:
