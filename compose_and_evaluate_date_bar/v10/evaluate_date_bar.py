@@ -31,14 +31,15 @@ class MainEvaluator:
         self.threshold = 0.05
         
         # 保存评估结果的文件夹路径
-        self.save_evaluate_res_folder_path = config.get_config('evaluate_res_folder_path')
+        self.save_evaluate_res_folder_path = \
+            f"D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy\\compose_and_evaluate_date_bar\\{self.hk_date_bar_version}\\"
         
         self.plot_info = {
             'stk': 'hk03690',
             'start_date': 20110101,
             'end_date': 20231231,
             'save_fig': True,
-            'save_png_folder_path': self.save_evaluate_res_folder_path['res_plot'],
+            'save_png_folder_path': self.save_evaluate_res_folder_path+'\\res\\plot',
         }
     
     def plot_evaluations(self, eval_compose_em, eval_compose_sina):
@@ -61,7 +62,7 @@ class MainEvaluator:
         err_percent_df_list = [eval_compose_em_err_percent, eval_compose_sina_err_percent]
         res_file_name = self.hk_date_bar_version + '_err_percent.csv'
         save_res_cols = [f'{self.hk_date_bar_version}_vs_em', f'{self.hk_date_bar_version}_vs_sina']
-        save_res_file_path = os.path.join(self.save_evaluate_res_folder_path['res_df'], res_file_name)
+        save_res_file_path = os.path.join(self.save_evaluate_res_folder_path+'\\res', res_file_name)
         self.save_err_percent_to_csv(err_percent_df_list, save_res_cols, save_res_file_path)
         
         # 画图

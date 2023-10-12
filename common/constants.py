@@ -38,8 +38,3 @@ min_bar_temp_folder_path = {
     'v10': "F:\\local_tmp_data\\stock\\HK\\v10\\v10_format_min_bar_raw_cols"
 }
 
-
-evaluate_res_folder_path = {
-    'res_df': "D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy\\compose_and_evaluate_date_bar\\evaluate_res\\res_df",
-    'res_plot': "D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy\\compose_and_evaluate_date_bar\\evaluate_res\\res_plot",
-}
