@@ -32,7 +32,7 @@ def get_trade_session_time_tuple(file_name) -> Tuple[str,str]:
     file_date_str = file_name.split('.')[0]
     # 根据file_name内的日期，获取对应的交易时间段
     for n in range(0,3):
-        if trade_session_change_date_dict_keys_list[n] <= file_date_str <= trade_session_change_date_dict_keys_list[n+1]:
+        if trade_session_change_date_dict_keys_list[n] <= file_date_str < trade_session_change_date_dict_keys_list[n+1]:
             return trade_session_change_date_dict[trade_session_change_date_dict_keys_list[n]]
 
 def gen_trade_session_date_time_dict(file_name,trade_session_time_tuple,return_int=False):
