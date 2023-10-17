@@ -84,15 +84,26 @@ G --> H[保存到临时路径和历史路径]
 ---
 
 ### 2 数据处理
+```mermaid
+graph LR
+A[data0]-->B[试验:检测错误（不知道错误）]
+B-->C[根据错误提出原因的假设]
+C-->D[实验:验证假设]
+D-- yes -->F[修正错误]
+D-- no -->C
+F --> G[评估]
+G -- yes -->H[data1]
+G -- no -->A
+```
 
-#### 2.1 时间轴数据格式标准化&日内用前价格进行填充（version 1.0）
+#### 2.1.0 时间轴数据格式标准化&日内用前价格进行填充（version 1.0）
 
 **标准化数据格式**
-| stk/date_time | open | high | low | close | volume | amount |pre_close | avg_price | hfq_factor |
-| :----: | :----: | :----: | :----: | :----: | :----: | :----: |:----: |:----: |:----: |   
-| hk00001/201603140930 | float | float | float | float | float | float | float | float | float |
+| stk/date_time | open | high | low | close | volume | amount |pre_close | avg_price | hfq_factor | is_liar|
+| :----: | :----: | :----: | :----: | :----: | :----: | :----: |:----: |:----: |:----: | :----:|
+| hk00001/201603140930 | float | float | float | float | float | float | float | float | float | int |
 |...|...|...|...|...|...|...|...|...|...|
-| hk09999/201603141600 | float | float | float | float | float | float | float | float | float |
+| hk09999/201603141600 | float | float | float | float | float | float | float | float | float | int |
 
 
 - [x] 实现 
@@ -121,6 +132,18 @@ G --> H[保存到临时路径和历史路径]
 
 - 添加字段存储路径
 > F:\local_tmp_data\stock\HK\v10_format_min_bar_add_cols
+
+#### 2.1.1.0  v1.0合成日线评估结果
+相对误差评估结果：(相对误差超过0.05)
+|     |v10_vs_em|  v10_vs_sina|
+|:---:|:---:|:---:|
+|relative_err_open| 0.015319 | 0.014605 |
+|relative_err_high| 0.014756 | 0.013290 |
+|relative_err_low | 0.014267 | 0.012988 |
+|relative_err_close| 0.016258 | 0.015938 |
+|relative_err_volume| 0.550280 | 0.547957 |
+|relative_err_amount | 0.126992| NaN |
+
 
 ---
 
