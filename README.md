@@ -98,8 +98,8 @@ relative_err_open| 0.015319 | 0.014605 |
 relative_err_high| 0.014756 | 0.013290 |
 relative_err_low | 0.014267 | 0.012988 |
 relative_err_close| 0.016258 | 0.015938 |
-relative_err_volume| 0.550361 | 0.548043 |
-relative_err_amount | 0.127064 | NaN |
+relative_err_volume| 0.550280 | 0.547957 |
+relative_err_amount | 0.126992| NaN |
 ##### 1.2.1.2 合成日线k线图评估结果
 
 **hk00001**
