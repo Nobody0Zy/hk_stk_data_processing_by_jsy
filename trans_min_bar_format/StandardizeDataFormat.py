@@ -100,16 +100,17 @@ class StandardizeDataFormat:
         return stk_df
         
     # 把raw_df 填入标准格式的dataframe中
-    def fill_in_standard_format_df(self,merge_res_df_by_pre_post_price):
+    def fill_in_standard_format_df(self,merge_res_df_by_pre_post_price,fillna=False):
         # 将原始数据填入标准格式的dataframe中
         in_trade_session_idx = self.std_df.index.intersection(merge_res_df_by_pre_post_price.index)
         fill_res_std_df = self.std_df.copy()
         fill_res_std_df.loc[in_trade_session_idx,:] = merge_res_df_by_pre_post_price.loc[in_trade_session_idx,:]
         fill_res_std_df.sort_index(inplace=True)
+        if fillna:
         # 填充nan
-        fill_res_std_df = fill_res_std_df.groupby(
-            level='stk',group_keys=False).apply(
-                self._fillna_for_std_stk_df)
+            fill_res_std_df = fill_res_std_df.groupby(
+                level='stk',group_keys=False).apply(
+                    self._fillna_for_std_stk_df)
         return fill_res_std_df
     
     
