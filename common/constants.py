@@ -14,6 +14,8 @@ min_bar_develop_hist_folder_path = {
     'v02': 'D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_develop_data\\stock\\HK_stock_data\\jsy_develop_hist_data\\min_bar\\v02_raw_data_date_pkl',   
     # 将pkl文件时间轴标准化后（包括合并盘前盘后竞价数据）的路径
     'v10': 'D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_develop_data\\stock\\HK_stock_data\\jsy_develop_hist_data\\min_bar\\v10_raw_data_date_pkl_format',
+    # 修复v10数据，剔除不在盘中交易时段的数据
+    'v11':  'D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_develop_data\\stock\\HK_stock_data\\jsy_develop_hist_data\\min_bar\\v11_fix_v10_not_in_trade_time_data'
 }
 
 
@@ -21,6 +23,7 @@ min_bar_develop_hist_folder_path = {
 date_bar_develop_hist_file_path = {
     # 标准化分钟线数据合成日线数据后的路径
     'v10': 'D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_develop_data\\stock\\HK_stock_data\\jsy_develop_hist_data\\date_bar\\v10_date_bar.pkl',
+    'v11': 'D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_develop_data\\stock\\HK_stock_data\\jsy_develop_hist_data\\date_bar\\v11_date_bar.pkl',
 }
 
 # 用于评估的其他来源的日线数据路径(东方财富、新浪）
