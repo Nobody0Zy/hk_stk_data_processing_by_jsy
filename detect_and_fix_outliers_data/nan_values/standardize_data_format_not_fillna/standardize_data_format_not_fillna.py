@@ -99,7 +99,7 @@ def process_min_bar_of_single_file(raw_pkl_file_path,save_folder_path):
     # -----------------------------------------------------------------------
     # 把df_by_merge_pre_post_price 填入标准格式的dataframe中
     fill_res_df_by_merge_res_df_to_std_df = \
-        std_format.fill_in_standard_format_df(merge_res_df_by_pre_post_price,fillna=True)
+        std_format.fill_in_standard_format_df(merge_res_df_by_pre_post_price,fillna=False)
 
     # -----------------------------------------------------------------------
     
@@ -109,7 +109,7 @@ def process_min_bar_of_single_file(raw_pkl_file_path,save_folder_path):
 
 
 def process_min_bar_in_files_path(split_files_path_list):
-    save_folder_path = config.get_config('min_bar_develop_hist_folder_path')['v10']
+    save_folder_path = 'F:\\local_tmp_data\\stock\\HK\\v09'
     # 处理文件路径列表中的文件
     for file_path in split_files_path_list:
         process_min_bar_of_single_file(file_path,save_folder_path)
@@ -144,7 +144,7 @@ def main():
     need_standardize_files_list.sort()
     # need_standardize_files_sum_list = need_standardize_files_sum_list[:100]
     
-    multiprocess_process_hk_min_bar(need_standardize_files_list, process_num=10)
+    multiprocess_process_hk_min_bar(need_standardize_files_list, process_num=15)
                 
 
 if __name__ == "__main__":

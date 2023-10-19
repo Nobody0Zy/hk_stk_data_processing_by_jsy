@@ -33,15 +33,9 @@ def gen_daily_price_data_from_min_bar_stk_df(min_bar_stk_df):
     通过分钟线数据生成日线数据
     """
     
-    min_bar_stk_df_open_dropna = min_bar_stk_df['open'].dropna()
-    if min_bar_stk_df_open_dropna.empty:
-        logging.error('min_bar_stk_df的开盘价全为nan值，数据可能有误，请检查, min_bar_stk_df:\n%s',min_bar_stk_df)
-        open_price = np.nan
-    else:
-        open_price = min_bar_stk_df_open_dropna.iloc[0]
     # 生成日线数据
     date_price_volume_data_dict = {
-        'open': open_price,
+        'open': min_bar_stk_df['open'].iloc[0],
         'high': min_bar_stk_df['high'].max(),
         'low': min_bar_stk_df['low'].min(),
         'close': min_bar_stk_df['close'].iloc[-1],
@@ -53,13 +47,14 @@ def gen_daily_price_data_from_min_bar_stk_df(min_bar_stk_df):
 
 @running_time
 def main():
-    data_version = 'v11'
+    data_version = 'v09'
     compose_method = gen_daily_price_data_from_min_bar_stk_df
-    min_bar_folder_path = config.min_bar_develop_hist_folder_path[data_version]
-    date_bar_folder_path = config.date_bar_develop_hist_file_path[data_version]
+    min_bar_folder_path = "F:\\local_tmp_data\\stock\\HK\\v09"
+    date_bar_folder_path = ("D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy"
+                            "\\detect_and_fix_outliers_data\\nan_values\\compoose_date_bar_not_fillna\\date_bar.pkl")
     
     compose_v11_date_bar = ComposeDateBar(compose_method,min_bar_folder_path,date_bar_folder_path)
-    compose_v11_date_bar.multiprocessing_process_file(10)
+    compose_v11_date_bar.multiprocessing_process_file(15)
     
 if __name__ == '__main__':
     main()
