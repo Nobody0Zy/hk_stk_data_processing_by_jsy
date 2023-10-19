@@ -24,12 +24,12 @@ class DetectNanDataDate:
         self.not_fillna_min_bar_path = "F:\\local_tmp_data\\stock\\HK\\v09"
         self.not_fillna_date_bar = pd.read_pickle(self.not_fillna_date_bar_path)
         self.open_is_nan_date_list = self.detect_col_isna_date('open')
-        # 以下用于检测的列表是排除节日和天气之后，还需要检查的异常缺失
+        # 以下用于检测的列表是排除节日和天气之后，还需要检查的
         self.open_is_nan_date_list_to_detect = [20120522, 20150619, 20151202, 20170411, 20170419]
         
         self.close_is_nan_date_list = self.detect_col_isna_date('close')
-        # 以下用于检测的列表是排除节日和天气之后，还需要检查的缺失
-        self.close_is_nan_date_list_to_detect = [20130927,]
+        # 以下用于检测的列表是排除节日和天气之后，还需要检查的
+        self.close_is_nan_date_list_to_detect = [20130927]
         
     def detect_col_isna_date(self,col):
         idx = pd.IndexSlice
