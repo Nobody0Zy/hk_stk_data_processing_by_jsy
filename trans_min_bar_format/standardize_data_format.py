@@ -99,7 +99,7 @@ def process_min_bar_of_single_file(raw_pkl_file_path,save_folder_path):
     # -----------------------------------------------------------------------
     # 把df_by_merge_pre_post_price 填入标准格式的dataframe中
     fill_res_df_by_merge_res_df_to_std_df = \
-        std_format.fill_in_standard_format_df(merge_res_df_by_pre_post_price,fillna=False)
+        std_format.fill_in_standard_format_df(merge_res_df_by_pre_post_price,fillna=True)
 
     # -----------------------------------------------------------------------
     

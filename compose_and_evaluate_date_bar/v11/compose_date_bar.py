@@ -38,7 +38,7 @@ def gen_daily_price_data_from_min_bar_stk_df(min_bar_stk_df):
         logging.error('min_bar_stk_df的开盘价全为nan值，数据可能有误，请检查, min_bar_stk_df:\n%s',min_bar_stk_df)
         open_price = np.nan
     else:
-        open_price = min_btk_df_open_dropna.iloc[0]
+        open_price = min_bar_stk_df_open_dropna.iloc[0]
     # 生成日线数据
     date_price_volume_data_dict = {
         'open': open_price,
@@ -58,8 +58,8 @@ def main():
     min_bar_folder_path = config.min_bar_develop_hist_folder_path[data_version]
     date_bar_folder_path = config.date_bar_develop_hist_file_path[data_version]
     
-    compose_v10_date_bar = ComposeDateBar(compose_method,min_bar_folder_path,date_bar_folder_path)
-    compose_v10_date_bar.multiprocessing_process_file(12)
+    compose_v11_date_bar = ComposeDateBar(compose_method,min_bar_folder_path,date_bar_folder_path)
+    compose_v11_date_bar.multiprocessing_process_file(10)
     
 if __name__ == '__main__':
     main()
