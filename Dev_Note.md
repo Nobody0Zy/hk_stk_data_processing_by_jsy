@@ -293,13 +293,68 @@ v10到v11，结果有轻微改善
 
 
 ---
-### 2.3 负数值处理
+### 2.3 负数值处理（version 2.0）
+#### 2.3.1 负数值检测及修正
+**负数值检测  仓库代码位置**
+
 | stk/date_time | open | high | low | close | volume | amount |   
 | :----: | :----: | :----: | :----: | :----: | :----: | :----: |  
 | hk00001/20190921 | <0 | <0 | <0 | <0 | <0 | <0 |  
+
+>detect_and_fix_outliers_data\negative_data\detect_negative_data.py
+
+**负数值文件名列表（677/2798）**
+本地位置：
+> D:\QUANT_GAME\python_game\pythonProject\hk_stk_data_processing_codes_by_jsy\detect_and_fix_outliers_data\negative_data\negative_data_files_list.pkl
+
+**负数dataframe（1815）**
+本地位置
+> D:\QUANT_GAME\python_game\pythonProject\hk_stk_data_processing_codes_by_jsy\detect_and_fix_outliers_data\negative_data\err_negative_df.pkl
+
+**负数值修正**
+由于负数值都出现在amount上，所以只需对amount进行修正即可
+1. if volume ==0,then amount == 0
+2. if volume !=0, then amount == close*volume
+
+**负数值修正 仓库代码位置**
+>  detect_and_fix_outliers_data\negative_data\fix_negative_data.py 
+
+**负数值修正结果（2.0）本地位置**
+>D:\QUANT_GAME\python_game\pythonProject\DATA\local_develop_data\stock\HK_stock_data\jsy_develop_hist_data\min_bar\v20_fix_v11_negative_data
+#### 2.3.1 负数值修正结果（version 2.0 评估)
+**version 2.0 合成日线   仓库代码位置**
+> compose_and_evaluate_date_bar\v20
+
+**version 2.0 合成日线 本地位置**
+>D:\QUANT_GAME\python_game\pythonProject\DATA\local_develop_data\stock\HK_stock_data\jsy_develop_hist_data\date_bar\v20_date_bar.pkl
+
+**version 2.0 评估结果**
+||v20_vs_em|v20_vs_sina|
+|:---:|:---:|:---:|
+|relative_err_open|0.015319|0.014605|
+|relative_err_high|0.014756|0.013290|
+|relative_err_low |0.014267|0.012987|
+|relative_err_close|0.016258|0.015938|
+|relative_err_volume|0.550279|0.547956|
+|relative_err_amount|0.127034|NAN|
+
+**v20 vs v11**
+
+|     |vs_em|vs_sina|
+|:---:|:---:|:---:|
+|relative_err_open| 0 | 0 |
+|relative_err_high| 0 | 0 |
+|relative_err_low | 0 | 0 |
+|relative_err_close| 0 | 0 |
+|relative_err_volume| 0 | 0 |
+|relative_err_amount | +0.0000444| NaN |
+
+
+这里amout增加了，是因为是与em比较，而em的数据中本来就有负数值的值，因此可能会造成增加的情况。（当然也可能处理方式不严谨所致）
+
+而再一次检测之后所有数据内负数值已经全部处理。
+
 ---
-
-
 
 
 ##### 3.2.2 量价错误值
