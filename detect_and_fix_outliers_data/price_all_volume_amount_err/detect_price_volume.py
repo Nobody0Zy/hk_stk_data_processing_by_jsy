@@ -1,28 +1,28 @@
 import os
+# sys.path.append(r"D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy\\common")
+import pickle
 import sys
+from multiprocessing import Pool
 from typing import List
 
 import numpy as np
 import pandas as pd
 
-sys.path.append(r"D:\\QUANT_GAME\\python_game\\pythonProject")
-from my_tools_packages import MyDecorator as MD
+# sys.path.append(r"D:\\QUANT_GAME\\python_game\\pythonProject")
+# from my_tools_packages import MyDecorator as MD
 
-running_time = MD.running_time
+# running_time = MD.running_time
 
-sys.path.append(r"D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy\\common")
-import pickle
-from multiprocessing import Pool
 
-import config
-import utilities as utl
+# import config
+# import utilities as utl
 
 
 class DetectPriceVolume:
     def __init__(self):
         self.data_version = 'v11'
-        # self.min_bar_folder_path = "F:\\local_tmp_data\\stock\\HK\\v11"
-        self.min_bar_folder_path = config.get_config('min_bar_develop_hist_folder_path')[self.data_version]
+        self.min_bar_folder_path =  "D:\\Quant_Game\\tmp_data\\v11_fix_v10_not_in_trade_time_data"
+        # self.min_bar_folder_path = config.get_config('min_bar_develop_hist_folder_path')[self.data_version]
         self.min_bar_file_list = os.listdir(self.min_bar_folder_path)
 
         self.correct_threshold = 0.1
@@ -30,10 +30,9 @@ class DetectPriceVolume:
         self.volume_100_file_idx_dict = dict()
 
     def detect_df_100_volume_bool(self, df):
-        df['amount/volume'] = df['amount'] / df['volume']
-        price_and_amount_volume_real_err = (df[['open', 'high', 'low', 'close']] / df[['amount/volume']].values - 1).abs()
-        volume100_df = df[(price_and_amount_volume_real_err <= (1 + self.volume100_threshold)).all(axis=1)
-                          & (price_and_amount_volume_real_err >= (1 - self.volume100_threshold)).all(axis=1)]
+        df['amount/volume100'] = df['amount'] / (df['volume']*100)
+        price_and_amount_volume_real_err = (df[['open', 'high', 'low', 'close']] / df[['amount/volume100']].values - 1).abs()
+        volume100_df = df[(price_and_amount_volume_real_err <= self.correct_threshold).all(axis=1)]
         fix_volume100_df = df[df.index.isin(volume100_df.index)]
         return fix_volume100_df.empty
 
@@ -81,5 +80,6 @@ class DetectPriceVolume:
 
 if __name__ == "__main__":
     detect = DetectPriceVolume()
-    detect.detect_all_files_100_volume(8)
-    detect.detect_all_files_data_price_volume_err(8)
+    detect.detect_all_files_100_volume(16)
+    detect.detect_all_files_data_price_volume_err(16)
+    print('done')
