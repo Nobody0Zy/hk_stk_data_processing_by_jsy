@@ -21,7 +21,7 @@ import pandas as pd
 class DetectPriceVolume:
     def __init__(self):
         self.data_version = 'v11'
-        self.min_bar_folder_path =  "D:\\Quant_Game\\tmp_data\\v11_fix_v10_not_in_trade_time_data"
+        self.min_bar_folder_path = "F:\\local_tmp_data\\stock\\HK\\v11"
         # self.min_bar_folder_path = config.get_config('min_bar_develop_hist_folder_path')[self.data_version]
         self.min_bar_file_list = os.listdir(self.min_bar_folder_path)
 
