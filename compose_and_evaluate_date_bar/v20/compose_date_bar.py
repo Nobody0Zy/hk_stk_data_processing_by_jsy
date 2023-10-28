@@ -55,11 +55,11 @@ def gen_daily_price_data_from_min_bar_stk_df(min_bar_stk_df):
 def main():
     data_version = 'v20'
     compose_method = gen_daily_price_data_from_min_bar_stk_df
-    min_bar_folder_path = config.min_bar_develop_hist_folder_path[data_version]
+    # min_bar_folder_path = config.min_bar_develop_hist_folder_path[data_version]
     date_bar_folder_path = config.date_bar_develop_hist_file_path[data_version]
-    
+    min_bar_folder_path = "F:\\local_tmp_data\\stock\\HK\\v20\\"
     compose_v11_date_bar = ComposeDateBar(compose_method,min_bar_folder_path,date_bar_folder_path)
-    compose_v11_date_bar.multiprocessing_process_file(14)
+    compose_v11_date_bar.multiprocessing_process_file(16)
     
 if __name__ == '__main__':
     main()

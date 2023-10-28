@@ -35,7 +35,7 @@ class MainEvaluator:
             f"D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy\\compose_and_evaluate_date_bar\\{self.hk_date_bar_version}"
         
         self.plot_info = {
-            'stk': 'hk00001',
+            'stk': 'hk00700',
             'start_date': 20110101,
             'end_date': 20231231,
             'save_fig': True,
@@ -65,9 +65,9 @@ class MainEvaluator:
         save_res_file_path = os.path.join(self.save_evaluate_res_folder_path+'\\res', res_file_name)
         self.save_err_percent_to_csv(err_percent_df_list, save_res_cols, save_res_file_path)
         
-        # # 画图
+        # 画图
         # self.plot_evaluations(eval_compose_em, eval_compose_sina)
-        
+
 def main():
     main_evaluator = MainEvaluator()
     main_evaluator.evaluate()

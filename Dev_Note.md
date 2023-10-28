@@ -252,34 +252,15 @@ G -- no -->A
 **v11vsv10**
 |     |vs_em|vs_sina|
 |:---:|:---:|:---:|
-|relative_err_open| -0.0000002 | -0.0000002 |
-|relative_err_high| -0.0000000 | -0.0000000 |
-|relative_err_low | -0.0000002 | -0.0000002 |
-|relative_err_close| -0.0000000 | -0.0000000 |
-|relative_err_volume| -0.0000818 | -0.0000873 |
-|relative_err_amount | -0.0000741| NaN |
+|relative_err_open| 0 | 0 |
+|relative_err_high| 0 | 0 |
+|relative_err_low | 0 | 0 |
+|relative_err_close| 0 | 0 |
+|relative_err_volume| -0.000002 | -0.000001 |
+|relative_err_amount | -0.000003 | NaN |
 
 v10到v11，结果有轻微改善
 ！（因为是剔除了不在交易时段的错误数据，其实也不算改善，只是在比对的时候，没有比对那些剔除的数据而已）！
-
----
-### 2.2 数据量价关系分析   
-
-用amount/volume来判断价格是否正常,即：
-- abs(price.all(axis=1) / (amount/volume) - 1)
- 
-判定为正确的数据误差范围:
-- correct_threshold = 0.05
-- 正确区间： （0，0.05]
-
-由于存在volume*100才为实际volume的数据（20160601后的数据）,判断为可以用volume100处理的数据误差范围
-- volume100_threshold = 0.1 
-- volume100处理的区间：[0.9，1.1]
-
-
-其他区间内的数据都暂时判断为异常数据
-
-
 
 ---
 ### 2.2 缺失值处理   
@@ -309,6 +290,95 @@ v10到v11，结果有轻微改善
 
 非异常缺失的数据，当日按照前一根k线的填充，隔日的用日线上一根k线的值填充。
 日内填充的结果已在version1.1中，而隔日填充在处理时可以先不填充，避免对之后的处理产生影响。
+
+---
+
+### 2.3 数据量价关系分析   
+#### 2.3.1 初步分析标准 
+用amount/volume来判断价格是较准确,即：
+- abs(price.all(axis=1) / (amount/volume) - 1) < correct_threshold
+- correct_threshold = 0.1
+
+由于存在volume*100才为实际volume的数据,所以计算以下误差来判断
+- abs(price.all(axis=1) / (amount/volume*100)-1) < correct_threshold
+- correct_threshold = 0.1 
+
+根据上面的判别标准,对volume100后较准确的数据进行修复
+- abs(price.all(axis=1) / (amount/volume*100)-1) < correct_threshold
+- correct_threshold = 0.1 
+
+**量价关系分析2.0及修正 仓库代码位置**
+> D:\QUANT_GAME\python_game\pythonProject\hk_stk_data_processing_codes_by_jsy\detect_and_fix_outliers_data\price_all_volume_amount_err\detect_and_fix_correct_threshold_01
+
+#### 2.3.2 初步分析结果
+其他区间内的数据都暂时判断为异常数据
+ - 总分钟线数据量：15,9856,2180
+ - 较准确数据量：13,9670,8472 (87.3728%)
+    包含
+    - volume == 0, amount == 0 ,price_equal == True
+    - volume == 0, amount == 0 ,price == np.nan
+ - volume100 后较准确的数据量： 1,9111,9168(11.9557 %)
+ - 其他待检查的数据量：10734540 (0.6715 %)
+   -  volume == 0, amount != 0 , price_equal == True 
+      - 数据量：724656 (0.0453%)
+   -  volume != 0, amount == 0 , price_equal == False
+      - 数据量 6175 
+   -  volume == 0, amount == 0, price_equal == False 
+      -  数据量 6
+   - data.any() < 0
+     - 数据量1815,都是amount<0
+综上还需要检查的数据量：9991754(0.62505%)
+
+***!!!注意!!!***
+后面待检查的数据,无法确信修复！！！因为无法明确错误的是price.any()还是volume和amount，不能依止其中一个进行修改
+所以就算是出现负数的情况，也先保留
+
+#### 2.3.3 对初步分析结果可以修复的部分进行修复
+##### 2.3.3.1 修正后的校准确的数据（correct_threshold = 0.1, data_version 2.0）
+**data version 2.0 本地分钟线存储位置：**
+> D:\QUANT_GAME\python_game\pythonProject\DATA\local_develop_data\stock\HK_stock_data\jsy_develop_hist_data\min_bar\v20_fix_price_volume_relationship_err
+##### 2.3.3.2 对data version 2.0合成日线并评估
+**data version 2.0 本地日线存储位置：**
+> D:\QUANT_GAME\python_game\pythonProject\DATA\local_develop_data\stock\HK_stock_data\jsy_develop_hist_data\date_bar\v20_date_bar.pkl
+
+data version 2.0 合成日线评估结果
+
+**相对误差评估结果：(相对误差超过0.05)**
+|     |v20_vs_em|  v20_vs_sina|
+|:---:|:---:|:---:|
+|relative_err_open| 0.015319 | 0.014605 |
+|relative_err_high| 0.014756 | 0.013290 |
+|relative_err_low | 0.014267 | 0.012987 |
+|relative_err_close| 0.016258 | 0.015938 |
+|relative_err_volume| 0.022927  | 0.015938 |
+|relative_err_amount | 0.127699 | NaN |
+
+**v20 vs v10**
+|     |vs_em|vs_sina|
+|:---:|:---:|:---:|
+|relative_err_open| 0 | 0 |
+|relative_err_high| 0 | 0 |
+|relative_err_low | 0 | 0 |
+|relative_err_close| 0 | 0 |
+|relative_err_volume| -0.527353 |	-0.532171 |
+|relative_err_amount | -0.000003 | NaN |
+
+##### 2.3.3.3 进一步用correct_threshold来检测 data version 2.0
+
+用amount/volume来判断价格是较准确,即：
+- abs(price.all(axis=1) / (amount/volume) - 1) < correct_threshold
+- correct_threshold = 0.1
+
+**分析结果**
+- 全部分钟线k线数据量：15,9856,2180
+- 较准确的数据量： 15,8782,7640 (99.3284%)
+- 可能错误的数据量： 1073,4540 (0.6715%)
+
+
+
+##### 2.3.4 进一步分析剩下还需要修复的数据
+
+待定。
 
 
 ---
@@ -366,7 +436,7 @@ v10到v11，结果有轻微改善
 |relative_err_low | 0 | 0 |
 |relative_err_close| 0 | 0 |
 |relative_err_volume| 0 | 0 |
-|relative_err_amount | +0.0000444| NaN |
+|relative_err_amount | +0.0000444 | NaN |
 
 
 这里amout增加了，是因为是与em比较，而em的数据中本来就有负数值的值，因此可能会造成增加的情况。（当然也可能处理方式不严谨所致）
