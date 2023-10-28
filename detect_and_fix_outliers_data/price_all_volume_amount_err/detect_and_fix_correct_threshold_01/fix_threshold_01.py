@@ -120,8 +120,8 @@ class FixMinBarThresholdNot01Data:
 class FixThresholdNot01Data:
     def __init__(self):
         self.input_data_version = 'v11'
-        # self.input_data_folder_path = config.get_config('min_bar_develop_hist_folder_path')[self.input_data_version]
-        self.input_data_folder_path = "F:\\local_tmp_data\\stock\\HK\\v11"
+        self.input_data_folder_path = config.get_config('min_bar_develop_hist_folder_path')[self.input_data_version]
+        # self.input_data_folder_path = "F:\\local_tmp_data\\stock\\HK\\v11"
         self.detected_res_list = pd.read_pickle("D:\\QUANT_GAME\\python_game\\pythonProject\\hk_stk_data_processing_codes_by_jsy"
                                                 "\\detect_and_fix_outliers_data\\price_all_volume_amount_err"
                                                 "\\detect_and_fix_correct_threshold_01\\file_num_list.pkl")
@@ -129,8 +129,8 @@ class FixThresholdNot01Data:
         # volume100后如果阈值小于0.5了，则修改
         self.fix_correct_threshold = 0.5
         self.output_data_version = 'v20'
-        # self.output_data_folder_path = config.get_config('min_bar_develop_hist_folder_path')[self.output_data_version]
-        self.output_data_tmp_folder_path = 'F:\\local_tmp_data\\stock\\HK\\v20'
+        self.output_data_folder_path = config.get_config('min_bar_develop_hist_folder_path')[self.output_data_version]
+        # self.output_data_tmp_folder_path = 'F:\\local_tmp_data\\stock\\HK\\v20'
 
     def fix_threshold_not_01_data_from_folder_path(self):
         input_file_list = os.listdir(self.input_data_folder_path)

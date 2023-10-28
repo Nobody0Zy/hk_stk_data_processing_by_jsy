@@ -9,21 +9,21 @@ from typing import List
 import numpy as np
 import pandas as pd
 
-# sys.path.append(r"D:\\QUANT_GAME\\python_game\\pythonProject")
-# from my_tools_packages import MyDecorator as MD
-#
-# running_time = MD.running_time
-#
-#
-# import config
-# import utilities as utl
+sys.path.append(r"D:\\QUANT_GAME\\python_game\\pythonProject")
+from my_tools_packages import MyDecorator as MD
+
+running_time = MD.running_time
+
+
+import config
+import utilities as utl
 
 
 class DetectPriceVolume:
     def __init__(self):
         self.data_version = 'v20'
-        self.min_bar_folder_path = "F:\\local_tmp_data\\stock\\HK\\v20"
-        # self.min_bar_folder_path = config.get_config('min_bar_develop_hist_folder_path')[self.data_version]
+        # self.min_bar_folder_path = "F:\\local_tmp_data\\stock\\HK\\v20"
+        self.min_bar_folder_path = config.get_config('min_bar_develop_hist_folder_path')[self.data_version]
         self.min_bar_file_list = os.listdir(self.min_bar_folder_path)
         self.detected_res_fileds = ['file_name', 'data_num', 'correct_num', 'volume100_num', 'err_num']
         self.correct_threshold = 0.1
