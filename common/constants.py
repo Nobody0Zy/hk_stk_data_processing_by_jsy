@@ -38,3 +38,9 @@ min_bar_temp_folder_path = {
     # 将pkl文件时间轴标准化后（包括合并盘前盘后竞价数据）的路径
     'v10': "F:\\local_tmp_data\\stock\\HK\\v10\\v10_format_min_bar_raw_cols"
 }
+
+
+# 分钟线数据添加字段（append_cols_list = ['pre_close','avg_price','hfq_factor','is_liar']） 
+min_bar_append_cols_folder_path = {
+    'v20': "D:\\QUANT_GAME\\python_game\\pythonProject\\DATA\\local_develop_data\\stock\\HK_stock_data\\jsy_develop_append_cols_data\\v20_append_cols"
+}
